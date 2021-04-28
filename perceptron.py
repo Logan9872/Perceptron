@@ -46,7 +46,7 @@ def halfmoon_shuffle(rad, width, d, n_samp):
 
 if __name__ == "__main__":
     dataNum = 1000
-    data = halfmoon(10, 6, 4, dataNum)
+    data = halfmoon(10, 6, 0, dataNum)
     pos_data = data[:, 0: int(dataNum / 2)]
     neg_data = data[:, int(dataNum / 2):dataNum]
 
@@ -63,6 +63,7 @@ if __name__ == "__main__":
 # 感知机分类实验
 # 通过感知机分类半月数据
 
+# 定义激活函数
 def sgn(y):
     y[y > 0] = 1
     y[y < 0] = -1
@@ -160,18 +161,19 @@ if __name__ == '__main__':
     train_x, train_y, test_x, test_y = split_data(x, y)
 
     neur = Perceptron((1, 2))
+    # 损失函数迭代的次数
     losses = neur.train(train_x, train_y, 100, 0.0001)
 
     err, acc = neur.test(test_x, test_y)
     print('rate of error:', err)
     print('rate of accuracy:', acc)
-
+    print("----------------------------------------------------------------------------------------")
     # 画损失曲线
     axis = [i for i in range(len(losses))]
     plt.figure()
     plt.plot(axis, losses)
     plt.savefig('./imgs/%s_mse_loss.png' % desc)
-    # plt.show()
+    plt.show()
 
     # 画决策面
     x_aixs = x[:, 0]
